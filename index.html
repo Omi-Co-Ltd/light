@@ -15,7 +15,7 @@
             margin: 0;
             background-color: #f0f8ff;
         }
-        #motivation-message {
+        #motivation-message, #place-phone-message {
             font-size: 24px;
             margin: 20px;
             text-align: center;
@@ -28,15 +28,41 @@
             color: white;
             border: none;
             border-radius: 5px;
+            transition: transform 0.2s;
         }
         #motivation-button:hover {
             background-color: #45a049;
         }
+        #motivation-button:active {
+            transform: scale(1.1);
+        }
+        #animation {
+            width: 100px;
+            height: 100px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            position: absolute;
+            display: none;
+            animation: grow 1s ease-out forwards;
+        }
+        @keyframes grow {
+            from {
+                transform: scale(1);
+                opacity: 1;
+            }
+            to {
+                transform: scale(10);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
 <body>
+    <div id="place-phone-message">スマホを置いてください</div>
     <div id="motivation-message">やる気スイッチを押してください！</div>
     <button id="motivation-button">やる気スイッチ</button>
+    <div id="animation"></div>
+    <audio id="click-sound" src="click-sound.mp3" preload="auto"></audio>
 
     <script>
         const messages = [
@@ -55,6 +81,17 @@
         document.getElementById('motivation-button').addEventListener('click', () => {
             const randomMessage = messages[Math.floor(Math.random() * messages.length)];
             document.getElementById('motivation-message').textContent = randomMessage;
+
+            // アニメーション表示
+            const animation = document.getElementById('animation');
+            animation.style.display = 'block';
+            animation.addEventListener('animationend', () => {
+                animation.style.display = 'none';
+            });
+
+            // 効果音再生
+            const clickSound = document.getElementById('click-sound');
+            clickSound.play();
         });
     </script>
 </body>
