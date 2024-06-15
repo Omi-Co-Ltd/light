@@ -1,36 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Turn on Flashlight</title>
+    <title>やる気スイッチ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f8ff;
+        }
+        #motivation-message {
+            font-size: 24px;
+            margin: 20px;
+            text-align: center;
+        }
+        #motivation-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        #motivation-button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    <h1>Turn on Flashlight</h1>
-    <button id="flashlight-btn">Toggle Flashlight</button>
+    <div id="motivation-message">やる気スイッチを押してください！</div>
+    <button id="motivation-button">やる気スイッチ</button>
 
     <script>
-        document.getElementById('flashlight-btn').addEventListener('click', async () => {
-            if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-                    const track = stream.getVideoTracks()[0];
-                    const imageCapture = new ImageCapture(track);
-                    const capabilities = await imageCapture.getPhotoCapabilities();
-                    if (capabilities.torch) {
-                        const torchOn = track.getSettings().torch || false;
-                        await track.applyConstraints({
-                            advanced: [{ torch: !torchOn }]
-                        });
-                    } else {
-                        alert('Torch not supported on this device.');
-                    }
-                } catch (err) {
-                    console.error('Error accessing media devices.', err);
-                }
-            } else {
-                alert('Media devices not supported.');
-            }
+        const messages = [
+            "あなたならできる！",
+            "今日も一日頑張ろう！",
+            "努力は必ず報われる！",
+            "今がその時だ！",
+            "可能性は無限大！",
+            "前向きに進もう！",
+            "あなたの努力は素晴らしい！",
+            "目標に向かって進んでいる！",
+            "信じる心が成功への鍵！",
+            "一歩ずつ確実に進もう！"
+        ];
+
+        document.getElementById('motivation-button').addEventListener('click', () => {
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('motivation-message').textContent = randomMessage;
         });
     </script>
 </body>
